@@ -1,0 +1,7 @@
+# Para converter de AMR para MP3
+sudo docker run --rm -v ./data/audio/temp:/data jrottenberg/ffmpeg:4.4-alpine -i /data/teste.amr -ab 125k /data/teste_amr.mp3 -y
+
+
+# Para converter de WebM/Opus para AMR
+sudo docker run --rm -v ./data/audio/temp:/data jrottenberg/ffmpeg:4.4-alpine -i /data/elindo.webm -acodec libopencore_amrnb -ac 1 -ar 8000 -ab 12.2k /data/elindo.amr
+

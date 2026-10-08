@@ -1,0 +1,11 @@
+{
+  "ecgTimestamp": "2026-05-14T10:29:55",
+  "gain": 1.0,
+  "zeroVoltage": 0.0,
+  "leadType": 1,
+  "samplingRate": 250,
+  "totalPackets": 10,
+  "currentPacket": 1,
+  "dataPoints": "512,514,513,515,516",
+  "timestamp": "2026-05-14T10:30:00"
+}

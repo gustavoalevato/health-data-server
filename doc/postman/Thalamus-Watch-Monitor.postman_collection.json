@@ -1,0 +1,656 @@
+{
+  "info": {
+    "name": "Thalamus Watch Monitor API",
+    "_postman_id": "5f2d1b0d-6a4d-4b27-81e4-8c046592ce2a",
+    "description": "Collection exportada a partir dos endpoints documentados via Swagger/OpenAPI no projeto Thalamus Watch Monitor.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Criar access token",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "token"
+              ]
+            },
+            "description": "Gera um access_token Bearer para acessar os endpoints protegidos. Copie o valor de `access_token` da resposta para a variável `{{accessToken}}` da collection."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authorized Devices",
+      "item": [
+        {
+          "name": "Listar dispositivos autorizados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/authorized-devices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "authorized-devices"
+              ]
+            },
+            "description": "Lista todos os dispositivos autorizados cadastrados."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar dispositivo autorizado por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/authorized-devices/{{deviceId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "authorized-devices",
+                "{{deviceId}}"
+              ]
+            },
+            "description": "Busca um dispositivo autorizado pelo identificador numérico."
+          },
+          "response": []
+        },
+        {
+          "name": "Criar dispositivo autorizado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imei\": \"123458800000015\",\n  \"description\": \"Relogio de teste\",\n  \"parserModel\": \"GPS_WATCH\",\n  \"status\": \"ACTIVE\",\n  \"lastBatteryPercentage\": 85,\n  \"lastSeen\": \"2026-04-22T10:00:00\",\n  \"createdAt\": \"2026-04-22T10:00:00\",\n  \"updatedAt\": \"2026-04-22T10:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/authorized-devices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "authorized-devices"
+              ]
+            },
+            "description": "Cria um novo dispositivo autorizado."
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar dispositivo autorizado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imei\": \"123458800000015\",\n  \"description\": \"Relogio atualizado\",\n  \"parserModel\": \"GPS_WATCH\",\n  \"status\": \"ACTIVE\",\n  \"lastBatteryPercentage\": 72,\n  \"lastSeen\": \"2026-04-22T11:30:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/authorized-devices/{{deviceId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "authorized-devices",
+                "{{deviceId}}"
+              ]
+            },
+            "description": "Atualiza um dispositivo autorizado existente."
+          },
+          "response": []
+        },
+        {
+          "name": "Remover dispositivo autorizado",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/authorized-devices/{{deviceId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "authorized-devices",
+                "{{deviceId}}"
+              ]
+            },
+            "description": "Remove um dispositivo autorizado pelo ID."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Device Commands",
+      "item": [
+        {
+          "name": "Enviar comando semantico",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"LOCATE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/devices/{{imei}}/command",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "devices",
+                "{{imei}}",
+                "command"
+              ]
+            },
+            "description": "Aceita ações tipadas como LOCATE, SET_UPLOAD_INTERVAL, CALL, MONITOR, CENTER, APN e RAW."
+          },
+          "response": []
+        },
+        {
+          "name": "Enviar comando bruto legado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"command\": \"CR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/devices/{{imei}}/command/raw",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "devices",
+                "{{imei}}",
+                "command",
+                "raw"
+              ]
+            },
+            "description": "Endpoint legado para envio de payload bruto."
+          },
+          "response": []
+        },
+        {
+          "name": "Solicitar localizacao imediata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/devices/{{imei}}/locate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "devices",
+                "{{imei}}",
+                "locate"
+              ]
+            },
+            "description": "Atalho para envio do comando de localização."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Device Health",
+      "item": [
+        {
+          "name": "Listar comprehensive health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/comprehensive-health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "comprehensive-health"
+              ]
+            },
+            "description": "Consulta medições consolidadas de saúde do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar heart rates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/heart-rates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "heart-rates"
+              ]
+            },
+            "description": "Consulta batimentos cardíacos por dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar body temperatures",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/body-temperatures",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "body-temperatures"
+              ]
+            },
+            "description": "Consulta temperaturas corporais do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar blood pressures",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/blood-pressures",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "blood-pressures"
+              ]
+            },
+            "description": "Consulta pressões arteriais do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar sleep sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/sleep-sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "sleep-sessions"
+              ]
+            },
+            "description": "Consulta sessões de sono do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar ecg data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/ecg-data",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "ecg-data"
+              ]
+            },
+            "description": "Consulta leituras de ECG do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar heartbeats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/heartbeats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "heartbeats"
+              ]
+            },
+            "description": "Consulta eventos de heartbeat do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar oxygen levels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/oxygen-levels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "oxygen-levels"
+              ]
+            },
+            "description": "Consulta registros recentes de SpO2/oxigenio do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar locations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/locations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "locations"
+              ]
+            },
+            "description": "Consulta registros recentes de localizacao do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar SOS Alerts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/sos-alerts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "sos-alerts"
+              ]
+            },
+            "description": "Consulta registros recentes de alertas SOS do dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar fall down alerts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/fall-down-alerts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "fall-down-alerts"
+              ]
+            },
+            "description": "Consulta alertas recentes de queda detectados pelo dispositivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar sleep entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/{{imei}}/sleep-entries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "{{imei}}",
+                "sleep-entries"
+              ]
+            },
+            "description": "Consulta blocos recentes de sono associados as sessoes de sono do dispositivo."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Device Audios",
+      "item": [
+        {
+          "name": "Enviar audio gravado para dispositivo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Arquivo AMR gravado que sera enviado ao dispositivo via comando Touch4P TK."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/devices/{{imei}}/audios/send",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "devices",
+                "{{imei}}",
+                "audios",
+                "send"
+              ]
+            },
+            "description": "Recebe um arquivo AMR por multipart/form-data no campo `file` e envia para o relogio Touch4P usando o comando TK. Retorna 200 quando o audio e enfileirado, 400 para arquivo invalido/dispositivo incompatível e 404 quando o dispositivo esta offline."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar audios recebidos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/devices/{{imei}}/audios?limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "devices",
+                "{{imei}}",
+                "audios"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Quantidade maxima de audios retornados. Valor permitido: 1 a 100."
+                }
+              ]
+            },
+            "description": "Lista os ultimos audios recebidos de um dispositivo, com metadados e URL de stream."
+          },
+          "response": []
+        },
+        {
+          "name": "Stream de audio recebido",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/device-audios/{{audioId}}/stream",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "device-audios",
+                "{{audioId}}",
+                "stream"
+              ]
+            },
+            "description": "Faz stream de um audio AMR recebido previamente do dispositivo."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "imei",
+      "value": "123458800000015"
+    },
+    {
+      "key": "deviceId",
+      "value": "1"
+    },
+    {
+      "key": "audioId",
+      "value": "1"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ]
+}

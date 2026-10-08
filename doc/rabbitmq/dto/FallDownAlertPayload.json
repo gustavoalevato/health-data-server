@@ -1,0 +1,10 @@
+{
+  "latitude": -23.55052,
+  "longitude": -46.633308,
+  "speed": 0.0,
+  "direction": "N",
+  "batteryPercentage": 85,
+  "gsmStrength": 4,
+  "statusBits": "00000001",
+  "timestamp": "2026-05-14T10:30:00"
+}

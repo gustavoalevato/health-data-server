@@ -1,0 +1,21 @@
+{
+  "sleepDate": "2026-05-14",
+  "startTime": "22:30:00",
+  "endTime": "06:30:00",
+  "totalDurationMinutes": 480,
+  "entries": [
+    {
+      "sleepType": 1,
+      "durationMinutes": 90
+    },
+    {
+      "sleepType": 2,
+      "durationMinutes": 300
+    },
+    {
+      "sleepType": 3,
+      "durationMinutes": 90
+    }
+  ],
+  "timestamp": "2026-05-14T06:30:00"
+}

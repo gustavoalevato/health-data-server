@@ -1,0 +1,56 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "producao", "homologacao" ]
+  pull_request:
+    branches: [ "producao", "homologacao" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Docker Login
+      uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Faz o build da imagem para ambiente de homologacao
+    - name: Build imagem docker Homologacao
+      if: github.ref == 'refs/heads/homologacao'
+      run: docker build . -t devroboflex/smart-watch-server:hml
+
+    - name: Push imagem docker homologacao
+      if: github.ref == 'refs/heads/homologacao'
+      run: docker push devroboflex/smart-watch-server:hml
+
+    # Faz o build da imagem para o ambiente de producao
+    - name: Build imagem docker Produção
+      if: github.ref == 'refs/heads/producao'
+      run: docker build . -t devroboflex/smart-watch-server:latest
+
+    - name: Push imagem docker Producao
+      if: github.ref == 'refs/heads/producao'
+      run: docker push devroboflex/smart-watch-server:latest
+
+    - name: Setup kubeconfig
+      if: github.ref == 'refs/heads/producao'
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+        chmod 600 $HOME/.kube/config
+
+    - name: Install kubectl
+      if: github.ref == 'refs/heads/producao'
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'v1.28.0'
+
+    - name: Deploy
+      if: github.ref == 'refs/heads/producao'
+      run: |
+        kubectl -n ilpi rollout restart deployment/smart-watch-server-deployment
